@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://smithy99:smithy99@devconnector.2kh2w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "jwtSecret": "db281839cb0ff1ed48488d2d8a55ddc65a01737351206547810d347f1e6e0584"
+}
