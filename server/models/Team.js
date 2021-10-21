@@ -9,18 +9,18 @@ const TeamSchema = new Schema({
     },
     rating: {
         type: Number,
-        required: true,
+        default: 0,
         validate: {
           validator : Number.isInteger,
           message   : '{VALUE} is not an integer value'
         }
     },
-    rateablePersonMap: {
-        type: Map,
-        of: Schema.Types.ObjectId,
-        ref: 'rateablePerson',
-        required: true
-    },
+    rateablePersonList:[{
+        rateablePerson: {
+            type: Schema.Types.ObjectId,
+            ref: 'rateablePerson'
+        }
+    }],
     date: {
         type: Date,
         default: Date.now
