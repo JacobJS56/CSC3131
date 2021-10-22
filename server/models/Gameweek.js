@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const GameweekSchema = new Schema({
-    gameweek: {
+    season: {
         type: Number,
         required: true,
         validate: {
@@ -10,12 +10,21 @@ const GameweekSchema = new Schema({
           message   : '{VALUE} is not an integer value'
         }
     },
-    teamMap: {
-        type: Map,
-        of: Schema.Types.ObjectId,
-        ref: 'team',
-        required: true
+    gameweekNumber: {
+        type: Number,
+        required: true,
+        validate: {
+          validator : Number.isInteger,
+          message   : '{VALUE} is not an integer value'
+        }
     },
+    teamList:
+    [{
+        team: {
+            type: Schema.Types.ObjectId,
+            ref: 'team'
+        }
+    }],
     date: {
         type: Date,
         default: Date.now
