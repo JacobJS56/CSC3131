@@ -1,9 +1,8 @@
-const express = require('express');
 const Gameweek = require('../models/Gameweek');
-const Tameweek = require('../models/Team');
+const Team = require('../models/Team');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-const { check, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 const createGameweek = async (req, res) => {
     const errors = validationResult(req);
