@@ -18,4 +18,10 @@ router.get('/all', rateablePersonService.getAllRateablePersons );
 // @access  Public
 router.get('/', auth.rateablePersonAuth, rateablePersonService.getRateablePersonById );
 
+// @route   POST api/rateablePerson/rating
+// @desc    Get rateablePerson by id and calculate rating
+// @access  Public
+router.post('/rating', auth.rateablePersonAuth, rateablePersonService.calculateRating );
+
+
 module.exports = router;

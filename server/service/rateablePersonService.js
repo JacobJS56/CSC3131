@@ -9,8 +9,8 @@ const createRateablePerson = async (req, res) => {
         return res.status(400).json({ error: errors.array()});
     }
 
-    const { firstName, lastName, rating, numOfRatings, team } = req.body;
-
+    const { firstName, lastName, rating, ratingList, numOfRatings, team } = req.body;
+    
     try {
         // See if gameweek exists
         
@@ -23,6 +23,7 @@ const createRateablePerson = async (req, res) => {
             firstName,
             lastName,
             rating,
+            ratingList,
             numOfRatings,
             team
         });
@@ -69,8 +70,28 @@ const getRateablePersonById = async (req, res) => {
         res.status(404).json({ rateablePerson: 'A RateablePerson with that number does not exist' });});
 };
 
+const calculateRating = async (req, res) => {
+    RateablePerson.findById(req.rateablePerson.id)
+    .then(rateablePerson => {
+        rateablePerson.ratingList.push(req.body.rating)
+        rateablePerson.numOfRatings = rateablePerson.ratingList.length;
+
+        const sum = rateablePerson.ratingList.reduce((a, b) => a + b, 0);
+        const rating = (sum / rateablePerson.ratingList.length) || 0;
+
+        rateablePerson.rating = rating.toFixed(2);
+        rateablePerson.save();
+
+        res.json(rateablePerson);
+    })
+    .catch(err => {
+        console.log(err.message);
+        res.status(404).json({ rateablePerson: 'A RateablePerson with that number does not exist' });});
+};
+
 module.exports = {
     createRateablePerson,
     getAllRateablePersons,
-    getRateablePersonById
+    getRateablePersonById,
+    calculateRating
 };
