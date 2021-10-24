@@ -6,12 +6,10 @@ const app = express();
 // Connect database
 connectDB();
 
-// Init middleware
 app.use( express.json({ extended: false }));
 
-app.get('/', (req, res) => res.send('API UP'))
-
 // Define Routes
+app.use('/api/rateable_person', require('./controller/api/rateablePerson'));
 app.use('/api/gameweek', require('./controller/api/gameweek'));
 app.use('/api/season', require('./controller/api/season'));
 
