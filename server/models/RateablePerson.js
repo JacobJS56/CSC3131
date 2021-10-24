@@ -23,8 +23,7 @@ const RateablePersonSchema = new Schema({
         default: 0
     },
     team: {
-        type: Schema.Types.ObjectId,
-        ref: 'team',
+        type: String,
         required: true
     },
     date: {
