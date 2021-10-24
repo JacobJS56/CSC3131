@@ -13,6 +13,7 @@ app.get('/', (req, res) => res.send('API UP'))
 
 // Define Routes
 app.use('/api/gameweek', require('./controller/api/gameweek'));
+app.use('/api/season', require('./controller/api/season'));
 
 const PORT = process.env.PORT || 5000;
 
