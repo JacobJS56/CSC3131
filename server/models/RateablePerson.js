@@ -10,21 +10,25 @@ const RateablePersonSchema = new Schema({
         type: String,
         required: true
     },
+    ratingList: [{
+        type: Number,
+    }],
     rating: {
         type: Number,
-        required: true,
-        validate: {
-          validator : Number.isInteger,
-          message   : '{VALUE} is not an integer value'
-        }
     },
     numOfRatings: {
         type: Number,
-        default: 0
+        validate: {
+            validator : Number.isInteger,
+            message   : '{VALUE} is not an integer value'
+        }
     },
-    team: {
+    teamName: {
         type: String,
         required: true
+    },
+    teamId: {
+        type: Number,
     },
     date: {
         type: Date,

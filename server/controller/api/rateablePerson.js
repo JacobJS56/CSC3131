@@ -18,4 +18,19 @@ router.get('/all', rateablePersonService.getAllRateablePersons );
 // @access  Public
 router.get('/', auth.rateablePersonAuth, rateablePersonService.getRateablePersonById );
 
+// @route   POST api/rateablePerson/rating
+// @desc    Get rateablePerson by id and calculate rating
+// @access  Public
+router.post('/rating', auth.rateablePersonAuth, rateablePersonService.calculateRating );
+
+// @route   POST api/rateablePerson/add_team
+// @desc    Get rateablePerson by id and add a team id
+// @access  Public
+router.post('/team', auth.rateablePersonAuth, rateablePersonService.addTeam );
+
+// @route   DELETE api/rateablePerson/delete
+// @desc    Get rateablePerson by id and delete them from the mongodb
+// @access  Public
+router.delete('/delete', auth.rateablePersonAuth, rateablePersonService.deleteRateablePersonById )
+
 module.exports = router;
