@@ -23,9 +23,12 @@ const RateablePersonSchema = new Schema({
             message   : '{VALUE} is not an integer value'
         }
     },
-    team: {
+    teamName: {
         type: String,
         required: true
+    },
+    teamId: {
+        type: Number,
     },
     date: {
         type: Date,
