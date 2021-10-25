@@ -10,6 +10,7 @@ app.use( express.json({ extended: false }));
 
 // Define Routes
 app.use('/api/rateable_person', require('./controller/api/rateablePerson'));
+app.use('/api/team', require('./controller/api/team'));
 app.use('/api/gameweek', require('./controller/api/gameweek'));
 app.use('/api/season', require('./controller/api/season'));
 
