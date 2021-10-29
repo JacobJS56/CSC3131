@@ -1,4 +1,5 @@
 const Team = require('../models/Team');
+const RateablePerson = require('../models/RateablePerson');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { validationResult } = require('express-validator');
@@ -6,8 +7,8 @@ const { validationResult } = require('express-validator');
 const createTeam = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).json({ error: errors.array()});
-
-    const { teamName, rating, rateablePersonList } = req.body;
+    let rateablePersonList = [];
+    const { teamName, rating } = req.body;
     
     try {
         // See if rateablePerson exists
@@ -16,7 +17,7 @@ const createTeam = async (req, res) => {
 
         // Create new one if not and save
         team = new Team({
-            teamName, rating, rateablePersonList
+            teamName, rateablePersonList
         });
         await team.save();
 
@@ -62,17 +63,25 @@ const getTeamById = async (req, res) => {
 };
 
 const calculateRating = async (req, res) => {
+    res.json(0);
+
+   /* let rating = 0;
     Team.findById(req.team.id)
     .then(team => {
-        let rating = 0;
         team.rateablePersonList.forEach(rateablePerson => {
-            rating = rating + rateablePerson.rating;
+            RateablePerson.findById(String(rateablePerson._id)).then(rp => {
+                rating = rp.rating;
+                team.rating = rating;
+                console.log(team.rating);
+                team.save();
+            });
         });
-        res.json(rating);
     })
     .catch(err => {
         console.log(err.message);
         res.status(404).json({ team: 'A Team with that ID does not exist' });});
+
+    res.json("Updated Rating");*/
 };
 
 const deleteTeamById = async (req, res) => {

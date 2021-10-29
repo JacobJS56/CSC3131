@@ -15,20 +15,22 @@ const RateablePersonSchema = new Schema({
     }],
     rating: {
         type: Number,
+        default: 0
     },
     numOfRatings: {
         type: Number,
         validate: {
             validator : Number.isInteger,
             message   : '{VALUE} is not an integer value'
-        }
+        },
+        default: 0
     },
     teamName: {
         type: String,
         required: true
     },
     teamId: {
-        type: Number,
+        type: String,
     },
     date: {
         type: Date,

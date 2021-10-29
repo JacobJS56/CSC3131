@@ -7,24 +7,39 @@ const createRateablePerson = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).json({ error: errors.array()});
 
-    const { firstName, lastName, rating, ratingList, numOfRatings, teamName, teamId } = req.body;
-    
+    const { firstName, lastName, teamName, teamId } = req.body;
     try {
         // See if rateablePerson exists
         //********************* */ need a unique way of identfying
         let rateablePerson = await RateablePerson.findOne({firstName, lastName, teamId});
         if(rateablePerson) return res.status(400).json({errors:[{msg:'RateablePerson already exists'}]});
+        
+        //check team name
+        team = null;
+        if(teamName != null) {
+            team = await Team.findOne({teamName});
+            if(team == null) return res.status(400).json({errors:[{msg:'Team name is incorrect'}]});
+        }
 
         // Create new one if not and save
         rateablePerson = new RateablePerson({
             firstName,
             lastName,
-            rating,
-            ratingList,
-            numOfRatings,
             teamName,
             teamId
         });
+
+        if(team !=  null) {
+            if(team.rateablePersonList == undefined) {
+                team.rateablePersonList = [rateablePerson];
+            } else {
+                team.rateablePersonList.push(rateablePerson);
+            }
+            console.log(team);
+            rateablePerson.teamId = team.teamId;
+        };
+        
+        await team.save();
         await rateablePerson.save();
 
         // Return jsonwebtoken

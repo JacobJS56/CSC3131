@@ -21,7 +21,7 @@ router.get('/', auth.teamAuth, teamService.getTeamById );
 // @route   POST api/team/rating
 // @desc    Get rateablePerson by id and calculate rating
 // @access  Public
-router.post('/rating', auth.teamAuth, teamService.calculateRating );
+router.get('/rating', auth.teamAuth, teamService.calculateRating );
 
 // @route   DELETE api/team/delete
 // @desc    Get rateablePerson by id and delete them from the mongodb
