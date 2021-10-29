@@ -21,6 +21,6 @@ router.get('/num/:gameweek_number', gameweekService.getGameweekByNumber );
 // @route   POST api/gameweek/team
 // @desc    Add teams to the gameweek teamMap
 // @access  Public
-router.post('/team', gameweekService.addTeamToGameweek );
+router.post('/team', auth.gameweekAuth, gameweekService.addTeamToGameweek );
 
 module.exports = router;

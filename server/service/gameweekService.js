@@ -1,4 +1,5 @@
 const Gameweek = require('../models/Gameweek');
+const Season = require('../models/Season');
 const Team = require('../models/Team');
 const jwt = require('jsonwebtoken');
 const config = require('config');
@@ -10,15 +11,21 @@ const createGameweek = async (req, res) => {
         return res.status(400).json({ error: errors.array()});
     }
 
-    const { gameweekNumber, teamMap } = req.body;
+    const { seasonNumber, gameweekNumber, teamMap } = req.body;
 
     try {
-        // See if gameweek exists
-        let gameweek = await Gameweek.findOne({gameweekNumber});
-        if(gameweek) return res.status(400).json({errors:[{msg:'Gameweek already exists'}]});
+        // See if season exists
+        let season = await Season.findOne({seasonNumber});
+        console.log(season);
+        if(!season) return res.status(400).json({errors:[{msg:'Season doesnt exist'}]});
+        
+        // See if gameweek exists with specific season
+        let gameweek = await Gameweek.findOne({seasonNumber, gameweekNumber});
+        if(gameweek) {return res.status(400).json({errors:[{msg:'Gameweek already exists'}]})};
 
         // Create new one if not and save
         gameweek = new Gameweek({
+            seasonNumber,
             gameweekNumber,
             teamMap,
         });
@@ -61,24 +68,26 @@ const getGameweekByNumber = async (req, res) => {
       .then(gameweek => res.json(gameweek))
       .catch(err => {
           console.log(err);
-          res.status(404).json({ gameweek: 'A gameweek with that number does not exist' });});
+          res.status(404).json({ gameweek: 'A gameweek with that number does not exist' });
+    });
 };
 
 const addTeamToGameweek = async (req, res) => {
-    //const errors = validationResult(req);
-    // Check Validation
-    //if (!isValid) return res.status(400).json(errors);
-    Gameweek.findOne({ gameweek: req.body.gameweekNumber }).then(gameweek => {
-        newTeam = new Team({
-            teamName: req.body.teamName,
-        });
-    
-        // Add to teamMap
-        gameweek.teamList.push(newTeam);
-        // save the new team to DB
-        newTeam.save();
-        // update gameweek
+    Gameweek.findById(req.gameweek.id)
+    .then(async gameweek => {
+        let team = await Team.findOne({teamName: req.body.teamName});
+        
+        if(team.teamName == null) res.status(404).json("bad request team does not exist");
+
+        // Add to gameweekList
+        gameweek.teamList.push(team);
+
+        // update season object
         gameweek.save().then(gameweek => res.json(gameweek));
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(404).json({ season: 'A season with that number does not exist' });
     });
 }
 

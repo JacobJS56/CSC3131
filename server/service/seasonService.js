@@ -64,33 +64,14 @@ const getSeasonByNumber = async (req, res) => {
 };
 
 const addGameweekToSeason = async (req, res) => {
-    //const errors = validationResult(req);
-    // Check Validation
-    //if (!isValid) return res.status(400).json(errors);
     Season.findById(req.season.id)
-    .then(season => {
-        //if there are teams save them
-        let newGameweekList = [];
+    .then(async season => {
+        let gameweek = await Gameweek.findOne({gameweekNumber: req.body.gameweekNumber});
+        
+        if(gameweek.gameweekNumber == null) res.status(404).json("bad request gameweek does not exist");
 
-        if(req.body.teamList.length > 0) req.body.teamList.forEach(team => {
-            team = new Team(team);
-            team.save();
-            newGameweekList.push(team);
-        });
-
-        newGameweek = new Gameweek({
-            season: season.seasonNumber,
-            gameweekNumber: req.body.gameweekNumber,
-            teamList: newGameweekList,
-        });
-    
         // Add to gameweekList
-        season.gameweekList.push(newGameweek);
-
-        //save gameweek to database
-        newGameweek.save();
-
-        //if there are rateablepersons save them
+        season.gameweekList.push(gameweek);
 
         // update season object
         season.save().then(season => res.json(season));
