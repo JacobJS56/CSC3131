@@ -1,0 +1,30 @@
+.Banner {
+  background-color: black;
+  width: 100%;
+  height: 15rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.FansText {
+  color: white;
+  text-align: center;
+  font-size: 5rem;
+  margin: 0;
+}
+
+.OpinionText {
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  font-size: 5rem;
+  margin: 0;
+}
+
+.Nav {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: inset;
+}

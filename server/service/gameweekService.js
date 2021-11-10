@@ -91,9 +91,22 @@ const addTeamToGameweek = async (req, res) => {
     });
 }
 
+const deleteGameweekById = async (req, res) => {
+    Gameweek.findById(req.gameweek.id)
+    .then(gameweek => {
+        gameweek.delete();
+        res.status(200).json("Deleted Gameweek");
+    })
+    .catch(err => {
+        console.log(err.message);
+        res.status(404).json({ gameweek: 'A Gameweek with that ID does not exist' });});
+};
+
+
 module.exports = {
     createGameweek,
     getAllGameweeks,
     getGameweekByNumber,
-    addTeamToGameweek
+    addTeamToGameweek,
+    deleteGameweekById
 };

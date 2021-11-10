@@ -8,7 +8,7 @@ const auth = require('../../middleware/auth');
 // @access  Public
 router.post('/', gameweekService.createGameweek );
 
-// @route   GET api/all
+// @route   GET api/gameweek/all
 // @desc    Get all gameweeks
 // @access  Public
 router.get('/all', gameweekService.getAllGameweeks );
@@ -21,6 +21,12 @@ router.get('/num/:gameweek_number', gameweekService.getGameweekByNumber );
 // @route   POST api/gameweek/team
 // @desc    Add teams to the gameweek teamMap
 // @access  Public
-router.post('/team', auth.gameweekAuth, gameweekService.addTeamToGameweek );
+router.post('/team', auth.auth, gameweekService.addTeamToGameweek );
+
+// @route   DELETE api/gameweek/delete
+// @desc    Get gameweek by id and delete them from the mongodb
+// @access  Public
+router.delete('/delete', auth.gameweekAuth, gameweekService.deleteGameweekById )
+
 
 module.exports = router;

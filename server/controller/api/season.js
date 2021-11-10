@@ -23,4 +23,10 @@ router.get('/', auth.seasonAuth, seasonService.getSeasonByNumber );
 // @access  Public
 router.post('/gameweek', auth.seasonAuth, seasonService.addGameweekToSeason );
 
+// @route   DELETE api/season/delete
+// @desc    Get season by id and delete them from the mongodb
+// @access  Public
+router.delete('/delete', auth.seasonAuth, seasonService.deleteSeasonById )
+
+
 module.exports = router;

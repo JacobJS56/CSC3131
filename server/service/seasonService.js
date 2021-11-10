@@ -82,9 +82,22 @@ const addGameweekToSeason = async (req, res) => {
     });
 };
 
+const deleteSeasonById = async (req, res) => {
+    Season.findById(req.season.id)
+    .then(season => {
+        season.delete();
+        res.status(200).json("Deleted Season");
+    })
+    .catch(err => {
+        console.log(err.message);
+        res.status(404).json({ season: 'A Season with that ID does not exist' });});
+};
+
+
 module.exports = {
     createSeason,
     getAllSeasons,
     getSeasonByNumber,
-    addGameweekToSeason
+    addGameweekToSeason,
+    deleteSeasonById
 };

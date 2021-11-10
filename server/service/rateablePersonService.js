@@ -103,10 +103,18 @@ const calculateRating = async (req, res) => {
 };
 
 const addTeam = async (req, res) => {
+    team = await Team.findOne({teamName});
+    if(team == null) return res.status(400).json({errors:[{msg:'Team name is incorrect'}]});
+
     RateablePerson.findById(req.rateablePerson.id)
     .then(rateablePerson => {
         rateablePerson.teamId = req.body.teamId;
-        rateablePerson.teamName = req.body.teamName;
+        rateablePerson.teamName = req.body.teamName;    
+        
+        // add to the rp list in team
+        team.rateablePersonList.push(rateablePerson);
+
+        team.save();
         rateablePerson.save();
         res.json(rateablePerson);
     })
