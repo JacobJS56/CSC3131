@@ -8,14 +8,16 @@ class TeamButton extends Component {
 
         this.state = {
             teamName: this.props.teamName,
-            primaryColor: this.props.primaryColor
+            primaryColor: this.props.primaryColor,
+            rating: this.props.rating
         }
     }
 
     render() {
         return (
-            <div>
-                <div>{this.state.teamName}</div>
+            <div className="TeamButton">
+                <div className="Button" onClick={() => window.location.href='/player/' + this.state.teamName } style={{backgroundColor: this.state.primaryColor}}>{this.state.teamName}</div>
+                <div className="Rating">{this.state.rating}</div>
             </div>
         );
     };

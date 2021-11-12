@@ -23,10 +23,10 @@ class GenericPage extends Component {
                     <Stack spacing={2} direction="row">
                         <Button className="Button" style={{ 
                             maxWidth: '5rem', maxHeight: '5rem', minWidth: '5rem', minHeight: '5rem', fontSize: '1.5rem',color: "grey"
-                         }} variant="text">ADMIN</Button>
-                        <Button className="Button" style={{ 
+                         }} variant="text" onClick={() =>  window.location.href='/admin' }>ADMIN</Button>
+                         <Button className="Button" style={{ 
                             maxWidth: '5rem', maxHeight: '5rem', minWidth: '5rem', minHeight: '5rem', fontSize: '1.5rem',color: "grey"
-                         }} variant="text">HOME</Button>
+                         }} variant="text" onClick={() =>  window.location.href='/'}>HOME</Button>
                     </Stack>
                 </div>
             </div>

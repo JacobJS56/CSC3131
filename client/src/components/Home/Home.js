@@ -16,6 +16,7 @@ class Home extends Component {
     render() {
         return (
             <div>
+                <p className="TeamText">TEAMS</p>
                 <div className="TopBar">
                     <p>Gameweek</p>
                     <Slider
@@ -31,10 +32,9 @@ class Home extends Component {
                     <p>Filter:</p>
                     <TextField id="standard-basic" label="" variant="standard" />
                 </div>
-                <p className="TeamText">TEAMS</p>
                 <div className="TeamList">
-                    <TeamButton teamName="Manchester United" primaryColor="Red" />
-                    <TeamButton teamName="Chelsea" primaryColor="Blue" />
+                    <TeamButton teamName="Manchester United" primaryColor="Red" rating="8.3" />
+                    <TeamButton teamName="Chelsea" primaryColor="Blue" rating="7.1"/>
                 </div>
             </div>
         );

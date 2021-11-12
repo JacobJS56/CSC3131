@@ -1,0 +1,15 @@
+.PlayerCard {
+  width: 20rem;
+  border: 0.3rem solid grey;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  margin-left: 2rem;
+  padding: 3rem;
+  font-size: 1.5rem;
+}
+
+.RatingButton {
+  border: 0.3rem solid grey;
+  width: 2rem;
+}
