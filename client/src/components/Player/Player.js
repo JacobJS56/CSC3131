@@ -17,7 +17,11 @@ class Player extends Component {
             <div>
                 <p className="TeamText">{this.state.teamName}</p>
                 <p className="PlayerText">PLAYERS</p>
-                <PlayerCard playerName='Phil Foden'/>
+                <div className="PlayerList">
+                    <PlayerCard playerName='Phil Foden'/>
+                    <PlayerCard playerName='Paul Pogba'/>
+                    <PlayerCard playerName='Kevin Debruyne'/>
+                </div>
             </div>
         );
     };

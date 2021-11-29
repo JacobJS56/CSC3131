@@ -34,7 +34,9 @@ class Home extends Component {
                 </div>
                 <div className="TeamList">
                     <TeamButton teamName="Manchester United" primaryColor="Red" rating="8.3" />
-                    <TeamButton teamName="Chelsea" primaryColor="Blue" rating="7.1"/>
+                    <TeamButton teamName="Chelsea" primaryColor="Blue" rating="7.9"/>
+                    <TeamButton teamName="Manchester City" primaryColor="Cyan" rating="7.3" />
+                    <TeamButton teamName="Tottenham" primaryColor="White" rating="7.1"/>
                 </div>
             </div>
         );

@@ -1,15 +1,51 @@
 .PlayerCard {
   width: 20rem;
+  height: 17rem;
   border: 0.3rem solid grey;
   text-align: center;
   margin-top: 2rem;
   margin-bottom: 2rem;
   margin-left: 2rem;
-  padding: 3rem;
+  padding: 1rem;
   font-size: 1.5rem;
 }
 
+.NameRow {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+.PlayerFirstName {
+  padding-right: 1rem;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.PlayerLastName {
+  font-size: 2rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.RatingRow {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  display: flex;
+  height: auto;
+  width: 14rem;
+  padding-left: 2.5rem;
+}
+
 .RatingButton {
-  border: 0.3rem solid grey;
-  width: 2rem;
+  border: 0.2rem solid grey;
+  width: 2.3rem;
+}
+
+.RatingButton:hover {
+  cursor: pointer;
+}
+
+.FanRatingText {
 }

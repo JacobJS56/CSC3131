@@ -21,3 +21,8 @@
   font-size: 4rem;
   margin: 0;
 }
+
+.TeamList {
+  display: flex;
+  flex-wrap: wrap;
+}
