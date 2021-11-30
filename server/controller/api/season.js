@@ -16,11 +16,17 @@ router.get('/all', seasonService.getAllSeasons );
 // @route   GET api/season/num/:season_number
 // @desc    Get season by number
 // @access  Public
-router.get('/', auth.seasonAuth, seasonService.getSeasonByNumber );
+router.get('/num/:season_number', seasonService.getSeasonByNumber );
 
 // @route   POST api/season/gameweek
 // @desc    Add teams to the season teamMap
 // @access  Public
 router.post('/gameweek', auth.seasonAuth, seasonService.addGameweekToSeason );
+
+// @route   DELETE api/season/delete
+// @desc    Get season by id and delete them from the mongodb
+// @access  Public
+router.delete('/delete', auth.seasonAuth, seasonService.deleteSeasonById )
+
 
 module.exports = router;

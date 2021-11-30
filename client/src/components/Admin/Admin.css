@@ -1,0 +1,16 @@
+.AdminText {
+  color: black;
+  font-weight: bold;
+  text-align: center;
+  font-size: 4rem;
+  margin: 0;
+}
+
+.AdminPlayerButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 7rem;
+  margin-right: 7rem;
+  margin-top: 7rem;
+  margin-bottom: 7rem;
+}

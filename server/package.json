@@ -16,6 +16,7 @@
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
+    "openssl-nodejs": "^1.0.5",
     "request": "^2.88.2"
   },
   "devDependencies": {

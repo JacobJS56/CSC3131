@@ -7,7 +7,7 @@ const createRateablePerson = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).json({ error: errors.array()});
 
-    const { firstName, lastName, teamName, teamId } = req.body;
+    const { seasonNumber, gameweekNumber, firstName, lastName, teamName, teamId } = req.body;
     try {
         // See if rateablePerson exists
         //********************* */ need a unique way of identfying
@@ -23,6 +23,8 @@ const createRateablePerson = async (req, res) => {
 
         // Create new one if not and save
         rateablePerson = new RateablePerson({
+            seasonNumber, 
+            gameweekNumber,
             firstName,
             lastName,
             teamName,
@@ -35,7 +37,6 @@ const createRateablePerson = async (req, res) => {
             } else {
                 team.rateablePersonList.push(rateablePerson);
             }
-            console.log(team);
             rateablePerson.teamId = team.teamId;
         };
         
@@ -84,29 +85,39 @@ const getRateablePersonById = async (req, res) => {
 };
 
 const calculateRating = async (req, res) => {
-    RateablePerson.findById(req.rateablePerson.id)
+    const { seasonNumber, gameweekNumber, firstName, lastName, rating } = req.body;
+    console.log(req.body)
+    RateablePerson.findOne({seasonNumber, gameweekNumber, firstName, lastName})
     .then(rateablePerson => {
-        rateablePerson.ratingList.push(req.body.rating)
+        rateablePerson.ratingList.push(rating)
         rateablePerson.numOfRatings = rateablePerson.ratingList.length;
 
         const sum = rateablePerson.ratingList.reduce((a, b) => a + b, 0);
-        const rating = (sum / rateablePerson.ratingList.length) || 0;
+        const rating2 = (sum / rateablePerson.ratingList.length) || 0;
 
-        rateablePerson.rating = rating.toFixed(2);
+        rateablePerson.rating = rating2.toFixed(2);
         rateablePerson.save();
 
         res.json(rateablePerson);
     })
     .catch(err => {
         console.log(err.message);
-        res.status(404).json({ rateablePerson: 'A RateablePerson with that number does not exist' });});
+        res.status(404).json({ rateablePerson: 'A RateablePerson with that name does not exist for this season/gameweek' });});
 };
 
 const addTeam = async (req, res) => {
+    team = await Team.findOne({teamName});
+    if(team == null) return res.status(400).json({errors:[{msg:'Team name is incorrect'}]});
+
     RateablePerson.findById(req.rateablePerson.id)
     .then(rateablePerson => {
         rateablePerson.teamId = req.body.teamId;
-        rateablePerson.teamName = req.body.teamName;
+        rateablePerson.teamName = req.body.teamName;    
+        
+        // add to the rp list in team
+        team.rateablePersonList.push(rateablePerson);
+
+        team.save();
         rateablePerson.save();
         res.json(rateablePerson);
     })

@@ -2,6 +2,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const RateablePersonSchema = new Schema({
+    seasonNumber: {
+        type: Number,
+        required: true,
+        validate: {
+          validator : Number.isInteger,
+          message   : '{VALUE} is not an integer value'
+        }
+    },
+    gameweekNumber: {
+        type: Number,
+        required: true,
+        validate: {
+          validator : Number.isInteger,
+          message   : '{VALUE} is not an integer value'
+        }
+    },
     firstName: {
         type: String,
         required: true

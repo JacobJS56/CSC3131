@@ -1,0 +1,30 @@
+.TeamButton {
+  display: flex;
+  margin-left: 5rem;
+}
+
+.Button {
+  width: 12rem;
+  border: 0.3rem solid grey;
+  text-align: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 3rem;
+  font-size: 1.5rem;
+}
+
+.Button:hover {
+  cursor: pointer;
+}
+
+.Rating {
+  width: 5rem;
+  text-align: center;
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding: 3rem;
+  border-bottom: 0.3rem solid grey;
+  border-right: 0.3rem solid grey;
+  border-top: 0.3rem solid grey;
+}

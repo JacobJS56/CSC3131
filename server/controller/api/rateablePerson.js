@@ -21,7 +21,7 @@ router.get('/', auth.rateablePersonAuth, rateablePersonService.getRateablePerson
 // @route   POST api/rateablePerson/rating
 // @desc    Get rateablePerson by id and calculate rating
 // @access  Public
-router.post('/rating', auth.rateablePersonAuth, rateablePersonService.calculateRating );
+router.post('/rating', rateablePersonService.calculateRating );
 
 // @route   POST api/rateablePerson/add_team
 // @desc    Get rateablePerson by id and add a team id
