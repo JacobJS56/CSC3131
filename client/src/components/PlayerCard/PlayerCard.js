@@ -7,15 +7,15 @@ class PlayerCard extends Component {
         super(props);
 
         this.state = {
-            playerName: this.props.playerName,
-            playerRating: 0,
+            playerFirstName: this.props.playerFirstName,
+            playerLastName: this.props.playerLastName,
+            playerRating: this.props.playerRating,
         }
     }
 
     render() {
-        const playerName = this.state.playerName.split(" ");
-        const playerFirstName = playerName[0];
-        const playerLastName = playerName[1];
+        const playerFirstName =  this.state.playerFirstName;
+        const playerLastName =  this.state.playerLastName;
 
         return (
             <div className="PlayerCard">

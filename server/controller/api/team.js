@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const teamService = require('../../service/teamService');
-const auth = require('../../middleware/auth');
 
 // @route   POST api/team
 // @desc    Create a team
@@ -9,23 +8,28 @@ const auth = require('../../middleware/auth');
 router.post('/', teamService.createTeam );
 
 // @route   GET api/all
-// @desc    Get all rateablePersons
+// @desc    Get all teams
 // @access  Public
 router.get('/all', teamService.getAllTeams );
 
 // @route   GET api/team
-// @desc    Get rateablePerson by id
+// @desc    Get team by id
 // @access  Public
-router.get('/', auth.teamAuth, teamService.getTeamById );
+router.get('/:team_id', teamService.getTeamById );
+
+// @route   GET api/team/rateable_persons/:team_name
+// @desc    Get all team rateablePersons
+// @access  Public
+router.get('/rateable_persons/:team_name', teamService.getAllRateablePerson )
 
 // @route   POST api/team/rating
-// @desc    Get rateablePerson by id and calculate rating
+// @desc    Get team by id and calculate rating
 // @access  Public
-router.get('/rating', auth.teamAuth, teamService.calculateRating );
+router.get('/rating', teamService.calculateRating );
 
 // @route   DELETE api/team/delete
-// @desc    Get rateablePerson by id and delete them from the mongodb
+// @desc    Get team by id and delete from the mongodb
 // @access  Public
-router.delete('/delete', auth.teamAuth, teamService.deleteTeamById )
+router.delete('/delete', teamService.deleteTeamById )
 
 module.exports = router;

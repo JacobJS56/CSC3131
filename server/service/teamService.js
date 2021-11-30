@@ -7,18 +7,33 @@ const { validationResult } = require('express-validator');
 const createTeam = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).json({ error: errors.array()});
+    
     let rateablePersonList = [];
-    const { teamName, rating } = req.body;
+    console.log(req.body)
+    const { seasonNumber, gameweekNumber, teamName, rating, primaryColour } = req.body;
     
     try {
-        // See if rateablePerson exists
-        let rateablePerson = await RateablePerson.findOne({teamName});
-        if(rateablePerson) return res.status(400).json({errors:[{msg:'Team already exists'}]});
+        // See if team exists
+        let team = await Team.findOne({teamName});
+        if(team) return res.status(400).json({errors:[{msg:'Team already exists'}]});
+
+        // See if gameweek exists with specific season
+        let gameweek = await Gameweek.findOne({seasonNumber, gameweekNumber});
 
         // Create new one if not and save
         team = new Team({
-            teamName, rateablePersonList
+            seasonNumber, gameweekNumber, teamName, rateablePersonList, rating, primaryColour
         });
+
+        if(gameweek !=  null) {
+            if(gameweek.teamList == undefined) {
+                gameweek.teamList  = [team];
+            } else {
+                gameweek.teamList .push(team);
+            }
+        };
+
+        await gameweek.save();
         await team.save();
 
         // Return jsonwebtoken
@@ -62,6 +77,26 @@ const getTeamById = async (req, res) => {
         res.status(404).json({ team: 'A Team with that ID does not exist' });});
 };
 
+const getAllRateablePerson = async (req, res) => {
+    Team.findOne({ teamName: req.params.team_name })
+    .populate('teamName')
+    .then(async team => {
+        rateableArray = []
+
+        for(let i = 0; i < team.rateablePersonList.length; i++) {
+            const rateablePerson = await RateablePerson.findById(team.rateablePersonList[i])
+            await rateableArray.push(rateablePerson)
+        }
+
+        console.log(rateableArray)
+        await res.json(rateableArray)
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(404).json({ team: 'A team with that name does not exist' });
+    });
+};
+
 const calculateRating = async (req, res) => {
     res.json(0);
 
@@ -99,6 +134,7 @@ module.exports = {
     createTeam,
     getAllTeams,
     getTeamById,
+    getAllRateablePerson,
     calculateRating,
     deleteTeamById
 };

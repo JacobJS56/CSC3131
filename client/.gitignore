@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+SSL_CRT_FILE=.cert/server.crt
+SSL_KEY_FILE=.cert/server.key

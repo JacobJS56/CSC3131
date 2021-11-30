@@ -10,7 +10,7 @@ const createSeason = async (req, res) => {
         return res.status(400).json({ error: errors.array()});
     }
 
-    const { seasonNumber, seasonList } = req.body;
+    const { seasonNumber } = req.body;
 
     try {
         // See if season exists
@@ -20,7 +20,6 @@ const createSeason = async (req, res) => {
         // Create new one if not and save
         season = new Season({
             seasonNumber,
-            seasonList,
         });
         await season.save();
 
@@ -56,11 +55,13 @@ const getAllSeasons = async (req, res) => {
 };
 
 const getSeasonByNumber = async (req, res) => {
-    Season.findById(req.season.id)
-      .then(season => res.json(season))
-      .catch(err => {
-          console.log(err.message);
-          res.status(404).json({ season: 'A season with that number does not exist' });});
+    Season.findOne({ seasonNumber: req.params.season_number })
+    .populate('seasonNumber')
+    .then(season => res.json(season))
+    .catch(err => {
+        console.log(err);
+        res.status(404).json({ season: 'A season with that number does not exist' });
+  });
 };
 
 const addGameweekToSeason = async (req, res) => {

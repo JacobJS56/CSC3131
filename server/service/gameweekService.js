@@ -11,12 +11,11 @@ const createGameweek = async (req, res) => {
         return res.status(400).json({ error: errors.array()});
     }
 
-    const { seasonNumber, gameweekNumber, teamMap } = req.body;
+    const { seasonNumber, gameweekNumber } = req.body;
 
     try {
         // See if season exists
         let season = await Season.findOne({seasonNumber});
-        console.log(season);
         if(!season) return res.status(400).json({errors:[{msg:'Season doesnt exist'}]});
         
         // See if gameweek exists with specific season
@@ -27,8 +26,17 @@ const createGameweek = async (req, res) => {
         gameweek = new Gameweek({
             seasonNumber,
             gameweekNumber,
-            teamMap,
         });
+
+        if(season !=  null) {
+            if(season.gameweekList == undefined) {
+                season.gameweekList = [gameweek];
+            } else {
+                season.gameweekList.push(gameweek);
+            }
+        };
+        
+        await season.save();
         await gameweek.save();
 
         // Return jsonwebtoken
@@ -72,6 +80,25 @@ const getGameweekByNumber = async (req, res) => {
     });
 };
 
+const getAllTeams = async (req, res) => {
+    Gameweek.findOne({ gameweekNumber: req.params.gameweek_number })
+    .populate('gameweekNumber')
+    .then(async gameweek => {
+        teamArray = []
+
+        for(let i = 0; i < gameweek.teamList.length; i++) {
+            const team = await Team.findById(gameweek.teamList[i])
+            await teamArray.push(team)
+        }
+        console.log(teamArray)
+        await res.json(teamArray)
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(404).json({ gameweek: 'A gameweek with that name does not exist' });
+    });
+};
+
 const addTeamToGameweek = async (req, res) => {
     Gameweek.findById(req.gameweek.id)
     .then(async gameweek => {
@@ -107,6 +134,7 @@ module.exports = {
     createGameweek,
     getAllGameweeks,
     getGameweekByNumber,
+    getAllTeams,
     addTeamToGameweek,
     deleteGameweekById
 };

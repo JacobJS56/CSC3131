@@ -35,7 +35,6 @@ const createRateablePerson = async (req, res) => {
             } else {
                 team.rateablePersonList.push(rateablePerson);
             }
-            console.log(team);
             rateablePerson.teamId = team.teamId;
         };
         
