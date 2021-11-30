@@ -3,6 +3,7 @@ const RateablePerson = require('../models/RateablePerson');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { validationResult } = require('express-validator');
+const { ObjectId } = require('mongodb');
 
 const createTeam = async (req, res) => {
     const errors = validationResult(req);
@@ -78,7 +79,7 @@ const getTeamById = async (req, res) => {
 };
 
 const getAllRateablePerson = async (req, res) => {
-    Team.findOne({ teamName: req.params.team_name })
+    Team.findOne({ seasonNumber: req.params.season_num, gameweekNumber: req.params.gameweek_num, teamName: req.params.team_name })
     .populate('teamName')
     .then(async team => {
         rateableArray = []
@@ -97,26 +98,30 @@ const getAllRateablePerson = async (req, res) => {
     });
 };
 
-const calculateRating = async (req, res) => {
-    res.json(0);
+const saveRating = async (team) => {
+    let rating = 0;
+    let array = [];
 
-   /* let rating = 0;
-    Team.findById(req.team.id)
-    .then(team => {
-        team.rateablePersonList.forEach(rateablePerson => {
-            RateablePerson.findById(String(rateablePerson._id)).then(rp => {
-                rating = rp.rating;
-                team.rating = rating;
-                console.log(team.rating);
-                team.save();
-            });
-        });
-    })
-    .catch(err => {
-        console.log(err.message);
-        res.status(404).json({ team: 'A Team with that ID does not exist' });});
+    await team.rateablePersonList.forEach(async rateablePerson => {
+        //await RateablePerson.findById(String(rateablePerson._id)).then(async rp => {
+            array.push(RateablePerson.findById(rateablePerson.id));
+        //});
+    });
 
-    res.json("Updated Rating");*/
+    //rating = rp.rating;
+    //team.rating = rating;
+    console.log(array);
+    //await team.save();
+
+    return rating;
+};
+
+const getRating = async (req, res) => {
+    const team = await Team.findOne({ seasonNumber: req.params.season_num, gameweekNumber: req.params.gameweek_num, teamName: req.params.team_name })
+
+    const rating = await saveRating(team);
+
+    res.json(rating);    
 };
 
 const deleteTeamById = async (req, res) => {
@@ -135,6 +140,6 @@ module.exports = {
     getAllTeams,
     getTeamById,
     getAllRateablePerson,
-    calculateRating,
+    getRating,
     deleteTeamById
 };

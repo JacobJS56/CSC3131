@@ -11,7 +11,7 @@ export default function App() {
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/admin" element={<Admin />}></Route>
-        <Route exact path="/player/:teamName" element={<Player />}></Route>
+        <Route exact path="/player/:teamName/:seasonNumber/:gameweekNumber" element={<Player />}></Route>
         <Route exact path="/404" ></Route>
       </Routes>
     </Router>

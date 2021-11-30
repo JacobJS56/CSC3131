@@ -10,16 +10,21 @@ import axios from "axios";
 
 const Home = () => {
     const [data, setData] = useState([]);
-    const [gameweekData, setGameweekData] = useState([]);
+    const [gameweekNumber, setGameweekData] = useState([]);
+    const [seasonNumber, setSeasonData] = useState([]);
 
     useEffect(async () => {
+        setSeasonData(1);
+        setGameweekData(1);
         const result = await axios.get("http://localhost:5000/api/gameweek/team/1")
         setData(result.data);
     }, []);
 
     const handleInputChange = async (event, newValue) => {
         try{
+            setData([]);
             const result = await axios.get("http://localhost:5000/api/gameweek/team/" + newValue)
+            setGameweekData(newValue);
             setData(result.data);
         }
         catch (e) {
@@ -31,7 +36,7 @@ const Home = () => {
     let rows = []
 
     for(let i = 0; i < data.length; i++) {
-        rows.push(<TeamButton teamName={data[i].teamName} primaryColor={data[i].primaryColour} rating={data[i].rating} />)
+        rows.push(<TeamButton teamName={data[i].teamName} primaryColor={data[i].primaryColour} rating={data[i].rating} gameweekNumber={gameweekNumber} seasonNumber={seasonNumber}/>)
     }
 
     return (

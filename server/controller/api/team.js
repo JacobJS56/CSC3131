@@ -17,15 +17,15 @@ router.get('/all', teamService.getAllTeams );
 // @access  Public
 router.get('/:team_id', teamService.getTeamById );
 
-// @route   GET api/team/rateable_persons/:team_name
-// @desc    Get all team rateablePersons
+// @route   GET api/team/rateable_persons/:team_name/:season_num/:gameweek_num
+// @desc    Get all RPs for specific season and gameweek
 // @access  Public
-router.get('/rateable_persons/:team_name', teamService.getAllRateablePerson )
+router.get('/rateable_persons/:team_name/:season_num/:gameweek_num', teamService.getAllRateablePerson )
 
-// @route   POST api/team/rating
+// @route   POST api/team/rating/:team
 // @desc    Get team by id and calculate rating
 // @access  Public
-router.get('/rating', teamService.calculateRating );
+router.get('/rating/:team_name/:season_num/:gameweek_num', teamService.getRating );
 
 // @route   DELETE api/team/delete
 // @desc    Get team by id and delete from the mongodb
