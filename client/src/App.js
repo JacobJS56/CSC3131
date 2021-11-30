@@ -7,7 +7,6 @@ import Player from './containers/PlayerPageBuilder';
 export default function App() {
   return (
     <Router>
-
       <Routes>
         <Route exact path="/" element={<Home />}></Route>
         <Route exact path="/admin" element={<Admin />}></Route>
