@@ -9,7 +9,7 @@ const createSeason = async (req, res) => {
     if(!errors.isEmpty()) {
         return res.status(400).json({ error: errors.array()});
     }
-
+    console.log(req.body)
     const { seasonNumber } = req.body;
 
     try {
@@ -37,7 +37,7 @@ const createSeason = async (req, res) => {
             { expiresIn: 360000 },
             ( err, token ) => {
                 if(err) throw err;
-                res.json({ token });
+                res.status(200).json({ token });
         });
 
     } catch(err) {
@@ -49,7 +49,9 @@ const createSeason = async (req, res) => {
 const getAllSeasons = async (req, res) => {
     Season.find()
       .populate('seasonNumber')
-      .then(seasons => res.json(seasons))
+      .then(seasons => {
+          res.status(200).json(seasons)
+        })
       .catch(err => {
           res.status(404).json({ season: 'There are no seasons' });});
 };
@@ -87,7 +89,7 @@ const deleteSeasonById = async (req, res) => {
     Season.findById(req.season.id)
     .then(season => {
         season.delete();
-        res.status(200).json("Deleted Season");
+        res.status(200);
     })
     .catch(err => {
         console.log(err.message);

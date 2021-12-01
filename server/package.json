@@ -4,7 +4,7 @@
   "description": "Football rating application for fans",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node server",
     "server": "nodemon server"
   },
@@ -22,6 +22,8 @@
   },
   "devDependencies": {
     "concurrently": "^6.3.0",
-    "nodemon": "^2.0.14"
+    "jest": "^27.4.2",
+    "nodemon": "^2.0.14",
+    "supertest": "^6.1.6"
   }
 }
