@@ -43,5 +43,5 @@ jobs:
     - run: |
         docker build ./client -t react
     - run: |
-        docker push ${{ secrets.DOCKER_USERNAME }}/server
-        docker push ${{ secrets.DOCKER_USERNAME }}/react
+        docker push ${{ secrets.DOCKER_USERNAME }}/csc3131
+        docker push ${{ secrets.DOCKER_USERNAME }}/csc3131
