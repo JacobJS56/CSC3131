@@ -39,7 +39,7 @@ jobs:
         context: ./server
         file: ./server/Dockerfile
         push: true
-        tags: jacobs56/csc3131:latest
+        tags: jacobs56/csc3131:server
     
     - name: Build and push
       id: docker_build2
@@ -48,7 +48,7 @@ jobs:
         context: ./client
         file: ./client/Dockerfile
         push: true
-        tags: jacobs56/csc3131:latest
+        tags: jacobs56/csc3131:client
 
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
