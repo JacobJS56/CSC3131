@@ -21,11 +21,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Login to Docker Hub
       uses: docker/login-action@v1
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+    
     - name: Set up Docker Buildx
       id: buildx
       uses: docker/setup-buildx-action@v1
@@ -35,13 +37,9 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./server
-        file: ./Dockerfile
+        file: ./server/Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/csc3131:${{ env.BRANCH }}
-        secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-        build-args: |
-            BRANCH=${{ env.BRANCH }}
+        tags: jacobs56/csc3131:latest
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
