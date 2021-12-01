@@ -38,6 +38,8 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKER_HUB_USERNAME }}/csc3131:latest
+        secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
