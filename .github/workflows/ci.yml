@@ -32,4 +32,4 @@ jobs:
     - run: npm test
       working-directory: server
     - run: |
-        docker build ./server -t server
+        docker-compuse up
