@@ -59,7 +59,7 @@ const getAllSeasons = async (req, res) => {
 const getSeasonByNumber = async (req, res) => {
     Season.findOne({ seasonNumber: req.params.season_number })
     .populate('seasonNumber')
-    .then(season => res.json(season))
+    .then(season => res.status(200).json(season))
     .catch(err => {
         console.log(err);
         res.status(404).json({ season: 'A season with that number does not exist' });

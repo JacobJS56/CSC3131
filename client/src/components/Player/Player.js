@@ -14,7 +14,7 @@ const Player = () => {
     useEffect(async () => {
         console.log(decodeURIComponent(window.location.pathname.split('/')[3]))
         
-        const result = await axios.get("http://localhost:5000/api/team/rateable_persons/"+decodeURIComponent(window.location.pathname.split('/')[2]+"/"+seasonNumber+"/"+gameweekNumber))
+        const result = await axios.get("http://node-docker:5000/api/team/rateable_persons/"+decodeURIComponent(window.location.pathname.split('/')[2]+"/"+seasonNumber+"/"+gameweekNumber))
 
         setData(result.data);
     }, []);

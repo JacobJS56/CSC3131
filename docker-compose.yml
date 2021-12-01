@@ -1,0 +1,24 @@
+version: "3"
+services:
+  react-docker:
+    container_name: react-docker
+    image: react-docker
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-app
+    depends_on:
+      - server
+
+  server:
+    container_name: server
+    image: server
+    ports:
+      - "5000:5000"
+    networks:
+      - mern-app
+
+networks:
+  mern-app:
+    driver: bridge
