@@ -43,5 +43,5 @@ jobs:
     - run: |
         docker build ./client -t react
     - run: |
-        docker push server
-        docker push react
+        docker push jacobs56/csc3131:server
+        docker push jacobs56/csc3131:react
