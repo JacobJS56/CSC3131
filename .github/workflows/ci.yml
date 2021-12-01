@@ -33,7 +33,9 @@ jobs:
     - run: npm run build --if-present
     - run: npm test
     
-    - name: Build & push Docker image
+    - name: Build react
       run: |
         docker build ./client -t react-docker
+    - name: Build nodejs
+      run: |
         docker build ./server -t react-docker
