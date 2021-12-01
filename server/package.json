@@ -23,6 +23,7 @@
   "devDependencies": {
     "concurrently": "^6.3.0",
     "jest": "^27.4.2",
-    "nodemon": "^2.0.14"
-  } 
+    "nodemon": "^2.0.14",
+    "supertest": "^6.1.6"
+  }
 }
