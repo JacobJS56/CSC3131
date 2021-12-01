@@ -39,9 +39,9 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     - run: |
-        docker build ./server -t server
+        docker build ./server -t csc3131:server
     - run: |
-        docker build ./client -t react
+        docker build ./client -t csc3131:react
     - run: |
-        docker push jacobs56/csc3131:server
-        docker push jacobs56/csc3131:react
+        docker push ${{ secrets.DOCKER_USERNAME }}/csc3131:server
+        docker push ${{ secrets.DOCKER_USERNAME }}/csc3131:react
