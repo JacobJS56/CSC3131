@@ -31,4 +31,4 @@ const GameweekSchema = new Schema({
     }
 })
 
-module.exports = Gameweek = mongoose.model("gameweek", GameweekSchema);
+module.exports = mongoose.model("gameweek", GameweekSchema);

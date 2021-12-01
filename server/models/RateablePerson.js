@@ -54,4 +54,4 @@ const RateablePersonSchema = new Schema({
     }
 })
 
-module.exports = RateablePerson = mongoose.model("rateablePerson", RateablePersonSchema);
+module.exports = mongoose.model("rateablePerson", RateablePersonSchema);

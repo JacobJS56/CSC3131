@@ -18,11 +18,16 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
     "openssl-nodejs": "^1.0.5",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "sinon": "^12.0.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "babel-jest": "^27.4.2",
     "concurrently": "^6.3.0",
     "jest": "^27.4.2",
+    "mock-req-res": "^1.2.0",
     "nodemon": "^2.0.14",
     "supertest": "^6.1.6"
   }
