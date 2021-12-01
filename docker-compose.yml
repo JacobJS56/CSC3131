@@ -1,8 +1,8 @@
 version: "3"
 services:
   react-docker:
-    container_name: react-docker
-    image: react-docker
+    container_name: react
+    image: react
     stdin_open: true
     ports:
       - "3000:3000"

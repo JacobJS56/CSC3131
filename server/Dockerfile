@@ -3,9 +3,9 @@
 FROM node:12.18.1
 ENV NODE_ENV=production
 
-WORKDIR /app
-
 COPY ["package.json", "package-lock.json*", "./"]
+
+EXPOSE 5000
 
 RUN npm install --production
 
