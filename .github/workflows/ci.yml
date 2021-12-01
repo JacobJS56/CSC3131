@@ -37,9 +37,11 @@ jobs:
         context: ./server
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/csc3131:latest
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/csc3131:${{ env.BRANCH }}
         secrets: |
             GIT_AUTH_TOKEN=${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        build-args: |
+            BRANCH=${{ env.BRANCH }}
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
