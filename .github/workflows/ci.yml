@@ -37,7 +37,7 @@ jobs:
         context: ./server
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/csc3131:server
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/csc3131:latest
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
