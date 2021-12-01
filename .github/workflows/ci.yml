@@ -11,10 +11,6 @@ on:
 
 jobs:
   build:
-    defaults:
-      run:
-        working-directory: server
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -30,11 +26,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+      working-directory: server
     - run: npm run build --if-present
+      working-directory: server
     - run: npm test
-
-    - name: Build docker
-      run: | 
-        echo ---Building and starting up docker---
-        docker-compose -f CSC3131/docker-compose.yml -p testing up -d
-        echo ---Containers up---
+      working-directory: server
