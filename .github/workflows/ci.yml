@@ -88,6 +88,30 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      
+    - name: Build, tag, and push image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+        IMAGE_TAG: ${{ steps.vars.outputs.tag }}
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+    
+    - name: Download task definition
+      run: |
+        aws ecs describe-task-definition --task-definition service \
+        --query taskDefinition > task-definition.json
+    
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: ${{ secrets.ECS_SERVICE }}
+        cluster: ${{ secrets.ECS_CLUSTER }}
+        wait-for-service-stability: true
     
     - name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
