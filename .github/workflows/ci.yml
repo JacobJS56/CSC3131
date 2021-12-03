@@ -43,7 +43,7 @@ jobs:
           IMAGE_TAG: server
         run: |
           docker build -t csc3131 .
-          docker push 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:latest
+          docker push 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:server
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
       - name: Fill in the new image ID in the Amazon ECS task definition
