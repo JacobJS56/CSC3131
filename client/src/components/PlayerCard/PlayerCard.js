@@ -26,7 +26,7 @@ class PlayerCard extends Component {
             rating: num
         }
         console.log(body)
-        const result = await axios.post("http://node-docker:5000/api/rateable_person/rating", body)
+        const result = await axios.post("http://localhost:5000/api/rateable_person/rating", body)
         this.setState(prevState => ({
             playerRating: result.data.rating
         }));

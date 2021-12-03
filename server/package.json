@@ -30,5 +30,9 @@
     "mock-req-res": "^1.2.0",
     "nodemon": "^2.0.14",
     "supertest": "^6.1.6"
+  },
+  "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true
   }
 }

@@ -30,7 +30,7 @@ class Admin extends Component {
         const body = {
             seasonNumber: this.state.season1,
         }
-        await axios.post("http://node-docker:5000/api/season/", body)
+        await axios.post("http://localhost:5000/api/season/", body)
         console.log(body);
     }
 
@@ -39,7 +39,7 @@ class Admin extends Component {
             seasonNumber: this.state.season2,
             gameweekNumber: this.state.gameweek1
         }
-        await axios.post("http://node-docker:5000/api/gameweek/", body)
+        await axios.post("http://localhost:5000/api/gameweek/", body)
         console.log(body);
     }
 
@@ -50,7 +50,7 @@ class Admin extends Component {
             teamName: this.state.teamName1,
             primaryColour: this.state.primaryColour
         }
-        await axios.post("http://node-docker:5000/api/team/", body)
+        await axios.post("http://localhost:5000/api/team/", body)
         console.log(body);
     }
 
@@ -62,7 +62,7 @@ class Admin extends Component {
             firstName: this.state.firstName,
             lastName: this.state.secondName
         }
-        await axios.post("http://node-docker:5000/api/rateable_person/", body)
+        await axios.post("http://localhost:5000/api/rateable_person/", body)
         console.log(body);
     }
 
