@@ -40,18 +40,25 @@ jobs:
         env:
           ECR_REGISTRY: csc3131
           ECR_REPOSITORY: csc3131
-          IMAGE_TAG: server
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t csc3131 .
+          docker tag csc3131:latest 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:server
+          docker push 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:server
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
+      - name: List files
+        run: ls -R
+        
+      - name: List files
+        working-directory: ./server
+        run: ls -R
+  
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          task-definition: task-definition.json
-          container-name: csc3131
+          task-definition: ./server/task-definition.json
+          container-name: server
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
