@@ -92,6 +92,7 @@ jobs:
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
+        working-directory: ./server
         env:
           ECR_REGISTRY: csc3131
           ECR_REPOSITORY: csc3131
@@ -103,6 +104,7 @@ jobs:
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
+        working-directory: ./server
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
           task-definition: task-definition.json
@@ -110,6 +112,7 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
 
       - name: Deploy Amazon ECS task definition
+        working-directory: ./server
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
