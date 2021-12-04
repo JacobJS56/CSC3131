@@ -85,7 +85,7 @@ jobs:
           ECR_REGISTRY: csc3131
           ECR_REPOSITORY: csc3131
         run: |
-          docker build -t csc3131 .
+          docker build -t server .
           docker tag csc3131:latest 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:server
           docker push 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:server
 
@@ -126,7 +126,7 @@ jobs:
           ECR_REGISTRY: csc3131
           ECR_REPOSITORY: csc3131
         run: |
-          docker build -t csc3131 .
+          docker build -t client .
           docker tag csc3131:latest 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:client
           docker push 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:client
 
