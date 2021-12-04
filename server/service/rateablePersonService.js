@@ -1,4 +1,5 @@
 const RateablePerson = require('../models/RateablePerson');
+const Team = require('../models/Team');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { validationResult } = require('express-validator');
@@ -15,10 +16,11 @@ const createRateablePerson = async (req, res) => {
         if(rateablePerson) return res.status(400).json({errors:[{msg:'RateablePerson already exists'}]});
         
         //check team name
-        team = null;
+        team1 = null;
         if(teamName != null) {
-            team = await Team.findOne({teamName});
-            if(team == null) return res.status(400).json({errors:[{msg:'Team name is incorrect'}]});
+            team1 = await Team.findOne({teamName});
+            
+            if(team1 == null) return res.status(400).json({errors:[{msg:'Team name is incorrect'}]});
         }
 
         // Create new one if not and save
@@ -31,16 +33,16 @@ const createRateablePerson = async (req, res) => {
             teamId
         });
 
-        if(team !=  null) {
-            if(team.rateablePersonList == undefined) {
-                team.rateablePersonList = [rateablePerson];
+        if(team1 !=  null) {
+            if(team1.rateablePersonList == undefined) {
+                team1.rateablePersonList = [rateablePerson];
             } else {
-                team.rateablePersonList.push(rateablePerson);
+                team1.rateablePersonList.push(rateablePerson);
             }
-            rateablePerson.teamId = team.teamId;
+            rateablePerson.teamId = team1.teamId;
         };
         
-        await team.save();
+        await team1.save();
         await rateablePerson.save();
 
         // Return jsonwebtoken
@@ -86,7 +88,7 @@ const getRateablePersonById = async (req, res) => {
 
 const calculateRating = async (req, res) => {
     const { seasonNumber, gameweekNumber, firstName, lastName, rating } = req.body;
-    console.log(req.body)
+
     RateablePerson.findOne({seasonNumber, gameweekNumber, firstName, lastName})
     .then(rateablePerson => {
         rateablePerson.ratingList.push(rating)
@@ -106,8 +108,8 @@ const calculateRating = async (req, res) => {
 };
 
 const addTeam = async (req, res) => {
-    team = await Team.findOne({teamName});
-    if(team == null) return res.status(400).json({errors:[{msg:'Team name is incorrect'}]});
+    let team1 = await Team.findOne({teamName});
+    if(team1 == null) return res.status(400).json({errors:[{msg:'Team name is incorrect'}]});
 
     RateablePerson.findById(req.rateablePerson.id)
     .then(rateablePerson => {
@@ -117,7 +119,7 @@ const addTeam = async (req, res) => {
         // add to the rp list in team
         team.rateablePersonList.push(rateablePerson);
 
-        team.save();
+        team1.save();
         rateablePerson.save();
         res.json(rateablePerson);
     })

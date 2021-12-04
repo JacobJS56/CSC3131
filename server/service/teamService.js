@@ -1,5 +1,6 @@
 const Team = require('../models/Team');
 const RateablePerson = require('../models/RateablePerson');
+const Gameweek = require('../models/Gameweek');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { validationResult } = require('express-validator');
@@ -19,22 +20,22 @@ const createTeam = async (req, res) => {
         if(team) return res.status(400).json({errors:[{msg:'Team already exists'}]});
 
         // See if gameweek exists with specific season
-        let gameweek = await Gameweek.findOne({seasonNumber, gameweekNumber});
+        let gameweek1 = await Gameweek.findOne({seasonNumber, gameweekNumber});
 
         // Create new one if not and save
         team = new Team({
             seasonNumber, gameweekNumber, teamName, rateablePersonList, rating, primaryColour
         });
 
-        if(gameweek !=  null) {
-            if(gameweek.teamList == undefined) {
-                gameweek.teamList  = [team];
+        if(gameweek1 !=  null) {
+            if(gameweek1.teamList == undefined) {
+                gameweek1.teamList  = [team];
             } else {
-                gameweek.teamList .push(team);
+                gameweek1.teamList .push(team);
             }
         };
 
-        await gameweek.save();
+        await gameweek1.save();
         await team.save();
 
         // Return jsonwebtoken
@@ -117,17 +118,17 @@ const saveRating = async (team) => {
 };
 
 const getRating = async (req, res) => {
-    const team = await Team.findOne({ seasonNumber: req.params.season_num, gameweekNumber: req.params.gameweek_num, teamName: req.params.team_name })
+    const team1 = await Team.findOne({ seasonNumber: req.params.season_num, gameweekNumber: req.params.gameweek_num, teamName: req.params.team_name })
 
-    const rating = await saveRating(team);
+    const rating = await saveRating(team1);
 
     res.json(rating);    
 };
 
 const deleteTeamById = async (req, res) => {
     Team.findById(req.team.id)
-    .then(team => {
-        team.delete();
+    .then(team1 => {
+        team1.delete();
         res.status(200).json("Deleted Team");
     })
     .catch(err => {
