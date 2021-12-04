@@ -59,7 +59,7 @@
       "dockerLabels": null,
       "systemControls": null,
       "privileged": null,
-      "name": "server"
+      "name": "sample-app"
     }
   ],
   "placementConstraints": [],
