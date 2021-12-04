@@ -24,8 +24,11 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: Prettier Action
+      - name: Prettify code
         uses: creyD/prettier_action@v4.1
+        with:
+         # This part is also where you can pass other options, for example:
+          prettier_options: --write **/*.{js,md}
   
   build-test-server:
     runs-on: ubuntu-latest
