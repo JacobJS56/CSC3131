@@ -28,7 +28,7 @@ jobs:
         uses: creyD/prettier_action@v4.1
         with:
          # This part is also where you can pass other options, for example:
-          prettier_options: --write **/*.{js,md}
+          prettier_options: --write "./**/*.{js,html}"
   
   build-test-server:
     runs-on: ubuntu-latest
