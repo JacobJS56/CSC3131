@@ -31,9 +31,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: npm ci
-      - run: npm run build --if-present
-      - run: npm test
+      - name: npm ci
+        run: npm ci
+      - name: install
+        run: npm install
+      - name: Generate build
+        run: npm run build
   
   build-test-server:
     runs-on: ubuntu-latest
