@@ -71,84 +71,50 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-server
-        working-directory: ./server
-        env:
-          ECR_REGISTRY: csc3131
-          ECR_REPOSITORY: csc3131
-        run: |
-          docker build -t server .
-          docker tag csc3131:latest 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:server
-          docker push 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:server
-
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def2
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
         with:
-          task-definition: server/task-definition.json
-          container-name: sample-app
-          image: ${{ steps.build-image.outputs.image }}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: server
-          cluster: csc3131
-          wait-for-service-stability: true
+          context: ./server
+          file: ./server/Dockerfile
+          push: true
+          tags: jacobs56/csc3131:server
+          
+      - name: Image digest
+        run: echo ${{ steps.docker_build.outputs.digest }}
 
   build-aws-client:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Login to Docker Hub
+        uses: docker/login-action@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      - name: Build, tag, and push image to Amazon ECR
-        id: build-react
-        working-directory: ./client
-        env:
-          ECR_REGISTRY: csc3131
-          ECR_REPOSITORY: csc3131
-        run: |
-          docker build -t client .
-          docker tag csc3131:latest 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:client
-          docker push 386243566449.dkr.ecr.eu-west-2.amazonaws.com/csc3131:client
-
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+        
+      - name: Build and push
+        id: docker_build2
+        uses: docker/build-push-action@v2
         with:
-          task-definition: client/task-definition.json
-          container-name: sample-app
-          image: ${{ steps.build-image.outputs.image }}
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: client
-          cluster: csc3131
-          wait-for-service-stability: true
+          context: ./client
+          file: ./client/Dockerfile
+          push: true
+          tags: jacobs56/csc3131:client
 
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
