@@ -36,7 +36,7 @@ jobs:
       - name: install
         run: npm install
       - name: Generate build
-        run: npm run build
+        run: npm start
   
   build-test-server:
     runs-on: ubuntu-latest
