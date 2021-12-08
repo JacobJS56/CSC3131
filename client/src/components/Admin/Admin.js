@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import axios from "axios";
+import Alert from '@mui/material/Alert';
 
 import './Admin.css';
 
@@ -21,40 +22,64 @@ class Admin extends Component {
             gameweek4: 1,
             teamName2: "",
             firstName: "",
-            secondName: ""
+            secondName: "",
+            modal: " "
         }
         this.submitSeason = this.submitSeason.bind(this);
     }
 
     async submitSeason() {
+        let modal = "";
         const body = {
             seasonNumber: this.state.season1,
         }
-        await axios.post("http://localhost:5000/api/season/", body)
-        console.log(body);
+        try {
+            await axios.post("http://localhost:5000/api/season/", body)
+            modal = <Alert severity="success">Successful Request</Alert>
+            console.log(body);
+        } catch(e) {
+            console.log(e);
+            modal = <Alert severity="error">This is an error alert — check console</Alert>
+        }
     }
 
     async submitGameweek() {
+        let modal = "";
         const body = {
             seasonNumber: this.state.season2,
             gameweekNumber: this.state.gameweek1
         }
-        await axios.post("http://localhost:5000/api/gameweek/", body)
-        console.log(body);
+        try {
+            await axios.post("http://localhost:5000/api/gameweek/", body)
+            modal = <Alert severity="success">Successful Request</Alert>
+            console.log(body);
+        } catch(e) {
+            console.log(e);
+            modal = <Alert severity="error">This is an error alert — check console</Alert>
+        }
+        this.setState({ modal: modal })
     }
 
     async submitTeam() {
+        let modal = "";
         const body = {
             seasonNumber: this.state.season3,
             gameweekNumber: this.state.gameweek2,
             teamName: this.state.teamName1,
             primaryColour: this.state.primaryColour
         }
-        await axios.post("http://localhost:5000/api/team/", body)
-        console.log(body);
+        try {
+            await axios.post("http://localhost:5000/api/team/", body)
+            modal = <Alert severity="success">Successful Request</Alert>
+            console.log(body);
+        } catch(e) {
+            console.log(e);
+            modal = <Alert severity="error">This is an error alert — check console</Alert>
+        }
     }
 
     async submitPlayer() {
+        let modal = "";
         const body = {
             seasonNumber: this.state.season4,
             gameweekNumber: this.state.gameweek3,
@@ -62,14 +87,22 @@ class Admin extends Component {
             firstName: this.state.firstName,
             lastName: this.state.secondName
         }
-        await axios.post("http://localhost:5000/api/rateable_person/", body)
-        console.log(body);
+        try {
+            await axios.post("http://localhost:5000/api/rateable_person/", body)
+            modal = <Alert severity="success">Successful Request</Alert>
+            console.log(body);
+        } catch(e) {
+            console.log(e);
+            modal = <Alert severity="error">This is an error alert — check console</Alert>
+        }
     }
 
     render() {
         return (
             <div>
                 <p className="AdminText">ADMIN DASHBOARD</p>
+                {this.state.modal}
+                <div className="AdminButtons">
                 <p>Add Season</p>
                 <TextField id="standard-basic" label="Season Number" onChange={ e => this.setState({season1: e.target.value})} variant="standard" />
                 <Button variant="contained" onClick={e => this.submitSeason()}>Submit</Button>
@@ -93,6 +126,7 @@ class Admin extends Component {
                 <TextField id="standard-basic" label="First Name" variant="standard" onChange={ e => this.setState({firstName: e.target.value})}/>
                 <TextField id="standard-basic" label="Second Name" variant="standard" onChange={ e => this.setState({secondName: e.target.value})}/>
                 <Button variant="contained" onClick={e => this.submitPlayer()}>Submit</Button>
+                </div>
             </div>
         );
     };

@@ -6,9 +6,7 @@
   margin: 0;
 }
 
-.AdminPlayerButtons {
-  display: flex;
-  justify-content: space-between;
+.AdminButtons {
   margin-left: 8rem;
   margin-right: 8rem;
   margin-top: 8rem;

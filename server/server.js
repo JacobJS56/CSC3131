@@ -3,11 +3,6 @@ const connectDB = require('./config/db');
 const fs = require('fs')
 const https = require('https')
 
-const options = {
-    key:  fs.readFileSync('config/key.pem'),
-    cert: fs.readFileSync('config/cert.pem')   
-}
-
 const app = express();
 
 // Connect database

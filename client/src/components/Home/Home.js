@@ -53,10 +53,6 @@ const Home = () => {
                     max={20}
                     onChange={handleInputChange}
                     valueLabelDisplay="auto"/>
-                <p>Sort by:</p>
-                <TextField id="standard-basic" label="" variant="standard" />
-                <p>Filter:</p>
-                <TextField id="standard-basic" label="" variant="standard" />
             </div>
             <div className="TeamList">
                 {rows}

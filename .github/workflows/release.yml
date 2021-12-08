@@ -5,6 +5,7 @@ on:
     tags:
       - 'v*'
 
+# Releases code whne tagged, modifed from https://www.youtube.com/watch?v=-0vWW-ymlfw
 jobs:
   release:
     name: 'Release'

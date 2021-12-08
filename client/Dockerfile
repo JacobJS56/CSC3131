@@ -1,6 +1,9 @@
 # pull the base image
 FROM node:alpine
 
+# Author
+LABEL authors="Jacob Smith"
+
 # set the working direction
 WORKDIR /src
 
