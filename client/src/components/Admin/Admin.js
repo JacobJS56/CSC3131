@@ -76,6 +76,7 @@ class Admin extends Component {
             console.log(e);
             modal = <Alert severity="error">This is an error alert — check console</Alert>
         }
+        this.setState({ modal: modal })
     }
 
     async submitPlayer() {
@@ -95,6 +96,7 @@ class Admin extends Component {
             console.log(e);
             modal = <Alert severity="error">This is an error alert — check console</Alert>
         }
+        this.setState({ modal: modal })
     }
 
     render() {

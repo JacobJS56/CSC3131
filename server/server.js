@@ -2,12 +2,15 @@ const express = require('express');
 const connectDB = require('./config/db');
 const fs = require('fs')
 const https = require('https')
-
+const morgan = require('morgan');
+const { constants } = require('http2');
 const app = express();
 
 // Connect database
 connectDB();
 app.use(express.json())
+var accessLogStream = fs.createWriteStream('./logs' + '/log.log', {flags: 'a'})
+app.use(morgan('combined',  {"stream": accessLogStream}));
 app.use( function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
@@ -17,6 +20,7 @@ app.use( function (req, res, next) {
 });
 
 // Define Routes
+app.use('/api/admin', require('./controller/api/admin'));
 app.use('/api/rateable_person', require('./controller/api/rateablePerson'));
 app.use('/api/team', require('./controller/api/team'));
 app.use('/api/gameweek', require('./controller/api/gameweek'));
