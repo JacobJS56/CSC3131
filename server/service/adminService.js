@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const config = require('config');
 const { validationResult } = require('express-validator');
 
+// Service for Admin
+
 const createAdmin = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {

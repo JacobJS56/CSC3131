@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Gameweek mongo db schema
+
 const GameweekSchema = new Schema({
     seasonNumber: {
         type: Number,

@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const { validationResult } = require('express-validator');
 
+// Service for RateablePerson
+
 const createRateablePerson = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).json({ error: errors.array()});
@@ -11,7 +13,6 @@ const createRateablePerson = async (req, res) => {
     const { seasonNumber, gameweekNumber, firstName, lastName, teamName, teamId } = req.body;
     try {
         // See if rateablePerson exists
-        //********************* */ need a unique way of identfying
         let rateablePerson = await RateablePerson.findOne({firstName, lastName, teamId});
         if(rateablePerson) return res.status(400).json({errors:[{msg:'RateablePerson already exists'}]});
         
@@ -69,7 +70,6 @@ const createRateablePerson = async (req, res) => {
 };
 
 const getAllRateablePersons = async (req, res) => {
-    /**************** figure out why we only populate with firstName */
     RateablePerson.find()
         .populate("firstName")
         .then(rateablePersons => res.json(rateablePersons))

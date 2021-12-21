@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Admin mongo db schema
+
 const AdminSchema = new Schema({
     email: {
         type: String,

@@ -2,6 +2,7 @@ const supertest = require('supertest')
 const seasonService = require('../service/__mocks__/seasonService')
 const { mockRequest, mockResponse } = require('mock-req-res')
 
+// test season
 describe("POST /season/all", () => {
 
     describe("given correct season", () => {

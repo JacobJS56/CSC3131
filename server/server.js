@@ -10,7 +10,11 @@ const app = express();
 connectDB();
 app.use(express.json())
 var accessLogStream = fs.createWriteStream('./logs' + '/log.log', {flags: 'a'})
+
+// logging
 app.use(morgan('combined',  {"stream": accessLogStream}));
+
+// for requests from other services/clients
 app.use( function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, DELETE');
@@ -26,8 +30,10 @@ app.use('/api/team', require('./controller/api/team'));
 app.use('/api/gameweek', require('./controller/api/gameweek'));
 app.use('/api/season', require('./controller/api/season'));
 
+//set port
 const PORT = process.env.PORT || 5000;
 
+// start server
 app.listen(PORT, () => console.log('Server started on port ' + PORT));
 
 module.exports = {

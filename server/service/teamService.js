@@ -6,6 +6,8 @@ const config = require('config');
 const { validationResult } = require('express-validator');
 const { ObjectId } = require('mongodb');
 
+// Service for Team  
+
 const createTeam = async (req, res) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) return res.status(400).json({ error: errors.array()});

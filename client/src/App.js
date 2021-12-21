@@ -5,6 +5,8 @@ import Admin from './containers/AdminPageBuilder';
 import AdminLogin from './containers/AdminLoginPageBuilder';
 import Player from './containers/PlayerPageBuilder';
 
+// routes for pages
+
 export default function App() {
   return (
     <Router>

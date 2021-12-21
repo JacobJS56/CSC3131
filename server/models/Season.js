@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Season mongo db schema
+
 const SeasonSchema = new Schema({
     seasonNumber: {
         type: Number,
