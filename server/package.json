@@ -30,7 +30,7 @@
     "concurrently": "^6.3.0",
     "jest": "^27.4.2",
     "mock-req-res": "^1.2.0",
-    "nodemon": "^2.0.14",
+    "nodemon": "^2.0.20",
     "supertest": "^6.1.6"
   },
   "jest": {
